@@ -25,7 +25,7 @@ export default function Frontpage() {
           <button
             type="button"
             aria-label="Continue without signing in"
-            onClick={() => console.log("Continue without signing up/in clicked")}
+            onClick={() =>  navigate("/Homepage")}
             className="frontpage-btn secondary-btn"
           >
             Continue without signing up/in
