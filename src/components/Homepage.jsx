@@ -53,6 +53,13 @@ export default function Homepage() {
       setLoading(true)
       setStateConversionMessage('')
 
+      // Check if API key exists
+      if (!API_KEY) {
+        setError('Weather API key not found. Please check your environment variables.')
+        setLoading(false)
+        return
+      }
+
       // Process search input - convert state names to random cities
       // Skip processing for special cases like 'auto:ip'
       const cityToSearch = searchInput === 'auto:ip' ? searchInput : processSearchInput(searchInput)
@@ -64,7 +71,7 @@ export default function Homepage() {
 
       // CONCEPT: API Calls - Using fetch() to make HTTP request to weather API
       const res = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityToSearch}&days=5`
       )
       const data = await res.json()
 
@@ -114,6 +121,7 @@ export default function Homepage() {
   // Empty dependency array [] means this runs once on mount, like componentDidMount
   // 🧠 Auto-detect location by IP on load for better user experience
   useEffect(() => {
+    console.log('Homepage component mounted, fetching weather for auto:ip')
     fetchWeather('auto:ip')
   }, []) // Empty dependency array = run once on mount
 
@@ -131,7 +139,8 @@ export default function Homepage() {
 
       {/* Conditional rendering based on state - shows different UI based on loading/error states */}
       {loading && <p>Loading your local weather...</p>}
-      {error && {error}}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {stateConversionMessage && <p style={{ color: '#0ea5e9', fontStyle: 'italic' }}>{stateConversionMessage}</p>}
 
       {/* 
         CONCEPT: Passing Props - Passing state data down to child components
