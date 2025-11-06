@@ -64,7 +64,7 @@ export default function Homepage() {
 
       // CONCEPT: API Calls - Using fetch() to make HTTP request to weather API
       const res = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityToSearch}&days=5`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`
       )
       const data = await res.json()
 
@@ -131,8 +131,7 @@ export default function Homepage() {
 
       {/* Conditional rendering based on state - shows different UI based on loading/error states */}
       {loading && <p>Loading your local weather...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {stateConversionMessage && <p style={{ color: '#0ea5e9', fontStyle: 'italic' }}>{stateConversionMessage}</p>}
+      {error && {error}}
 
       {/* 
         CONCEPT: Passing Props - Passing state data down to child components
