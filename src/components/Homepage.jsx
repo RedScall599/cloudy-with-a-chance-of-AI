@@ -71,7 +71,7 @@ export default function Homepage() {
 
       // CONCEPT: API Calls - Using fetch() to make HTTP request to weather API
       const res = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityToSearch}&days=5`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityToSearch}&days=7&aqi=no&alerts=no`
       )
       const data = await res.json()
 
