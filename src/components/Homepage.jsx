@@ -1,9 +1,10 @@
 
 
 import React, { useState, useEffect } from 'react'
-import SearchBar from '../components/SearchBar'
-import WeatherCard from '../components/WeatherCard'
-import ForecastGrid from '../components/ForecastGrid'
+import SearchBar from '../hooks/SearchBar'
+import WeatherCard from '../hooks/WeatherCard'
+import ForecastGrid from '../hooks/ForecastGrid'
+
 import { processSearchInput } from '../utils/citySearch'
 
 /**
@@ -62,28 +63,7 @@ function generateFullWeekForecast(apiForecastData) {
   })
 }
 
-/**
- * Homepage Component
- * 
- * CONCEPT: Create Components - Main page component that orchestrates the weather app functionality.
- * This component demonstrates several key React concepts working together.
- * 
- * CONCEPT: Hooks - Uses multiple React hooks (useState, useEffect) to manage state and side effects.
- * 
- * CONCEPT: useState - Manages multiple pieces of state for weather data, loading states, and error handling.
- * State allows the component to be interactive and respond to user actions and data changes.
- * 
- * CONCEPT: useEffect - Performs side effects like API calls after component renders.
- * Used here to auto-detect user's location and fetch weather data on component mount.
- * 
- * CONCEPT: API Calls - Demonstrates fetching data from external weather API with proper error handling.
- * 
- * CONCEPT: Passing Props - Passes state and functions down to child components (SearchBar, WeatherCard, ForecastGrid).
- * This enables component composition and keeps data flowing downward in the component tree.
- * 
- * CONCEPT: Lifting State - All weather-related state lives in this parent component and is shared
- * between child components through props. This ensures data consistency across the app.
- */
+
 export default function Homepage() {
   // CONCEPT: useState - Managing multiple pieces of state for different aspects of the weather app
   // Each useState call returns [currentValue, setterFunction] array that we destructure
@@ -337,7 +317,7 @@ export default function Homepage() {
         <div className="homepage-nav">
           <button className="nav-btn">Today</button>
           <button className="nav-btn">Forecast</button>
-          <button className="nav-btn" onClick={cycleTimeOfDay}>
+          <button className={`nav-btn ${timeOfDay}`}>
             {timeOfDay === 'morning' && '☀️ Morning'}
             {timeOfDay === 'afternoon' && '🌤️ Afternoon'}
             {timeOfDay === 'evening' && '🌅 Evening'}
