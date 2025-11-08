@@ -105,8 +105,6 @@ export default function Homepage() {
       <header className="homepage-header">
         <div className="homepage-logo">⛅ Cloudy with AI</div>
         <div className="homepage-nav">
-          <button className="nav-btn">Today</button>
-          <button className="nav-btn">Forecast</button>
           <button className="nav-btn" onClick={cycleTimeOfDay}>
             {timeOfDay === 'morning' && '☀️ Morning'}
             {timeOfDay === 'afternoon' && '🌤️ Afternoon'}
