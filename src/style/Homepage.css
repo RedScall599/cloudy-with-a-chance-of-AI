@@ -1133,3 +1133,13 @@ html, body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Status Messages */
+.error-message {
+  color: red;
+}
+
+.state-conversion-message {
+  color: #0ea5e9;
+  font-style: italic;
+}
