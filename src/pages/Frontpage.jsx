@@ -28,18 +28,7 @@ export default function Frontpage() {
         <p className="frontpage-subtext">weather app</p>
 
         <div className="frontpage-buttons">
-          {/* 
-            Event handler example - onClick prop receives a function that runs when button is clicked.
-            This demonstrates passing functions as props and handling user interactions.
-          */}
-          <button
-            type="button"
-            aria-label="Sign in or Sign up"
-            onClick={() => console.log("Sign in / Sign up clicked")}
-            className="frontpage-btn primary-btn"
-          >
-            Sign in / Sign up
-          </button>
+          
 
           {/* 
             CONCEPT: Hooks in Action - Using the navigate function from useNavigate hook
@@ -51,7 +40,7 @@ export default function Frontpage() {
             onClick={() =>  navigate("/Homepage")}
             className="frontpage-btn secondary-btn"
           >
-            Continue without signing up/in
+            Continue
           </button>
         </div>
 
