@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// Keep server config minimal: allow Vite to auto-pick an open port.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react()]
 })

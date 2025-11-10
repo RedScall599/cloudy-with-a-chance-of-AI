@@ -15,6 +15,8 @@
  * - Programmatic navigation using React Router
  */
 export default function Frontpage() {
+    console.log('🏠 Frontpage.jsx is rendering!')
+    
     // CONCEPT: Hooks - useNavigate hook provides navigation functionality
     // This hook returns a function that can be called to navigate to different routes
     const navigate = useNavigate()

@@ -12,26 +12,21 @@ export default function Homepage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [stateConversionMessage, setStateConversionMessage] = useState('')
-  const [timeOfDay, setTimeOfDay] = useState('')
-  const [testTime, setTestTime] = useState(null)
+  // Initialize immediately so the badge shows without a flash
+  const [timeOfDay, setTimeOfDay] = useState(() => getTimeOfDay())
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
 
   function getTimeOfDay() {
-    const hour = testTime !== null ? testTime : new Date().getHours()
+    const now = new Date()
+    const hour = now.getHours()
     if (hour >= 6 && hour < 12) return 'morning'
     if (hour >= 12 && hour < 17) return 'afternoon'
     if (hour >= 17 && hour < 20) return 'evening'
     return 'night'
   }
 
-  function cycleTimeOfDay() {
-    const times = [8, 14, 18, 22]
-    const current = testTime !== null ? testTime : new Date().getHours()
-    const currentIndex = times.findIndex(time => time === current)
-    const nextIndex = (currentIndex + 1) % times.length
-    setTestTime(times[nextIndex])
-  }
+  // No manual override function needed; theme updates automatically based on clock
 
   async function fetchWeather(searchInput) {
     try {
@@ -47,14 +42,21 @@ export default function Homepage() {
         return
       }
 
-      const cityToSearch =
-        searchInput === 'auto:ip' ? searchInput : processSearchInput(searchInput)
+let cityToSearch = searchInput
+      let searchResult = null
 
-      if (cityToSearch !== searchInput && searchInput !== 'auto:ip') {
+      if (searchInput !== 'auto:ip') {
+        searchResult = processSearchInput(searchInput)
+        cityToSearch = searchResult.city
+      }
+
+      if (searchResult && searchResult.type === 'state') {
         setStateConversionMessage(
-          `Found state "${searchInput}" - showing weather for ${cityToSearch}`
+          `Found state "${searchResult.original}" - showing weather for ${cityToSearch}`
         )
       }
+
+
 
       const res = await fetch(
         `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityToSearch}&days=7&aqi=no&alerts=no`
@@ -103,20 +105,30 @@ export default function Homepage() {
   }, [])
 
   useEffect(() => {
+    // Align updates to every minute to avoid unnecessary re-renders
+    const interval = setInterval(() => {
+      setTimeOfDay(getTimeOfDay())
+    }, 60000) // check every 60s
+
+    // Also do an immediate check on mount in case the minute just rolled over
     setTimeOfDay(getTimeOfDay())
-  }, [testTime])
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className={`homepage-container ${timeOfDay}`}>
       <header className="homepage-header">
         <div className="homepage-logo">⛅ Cloudy with AI</div>
         <div className="homepage-nav">
-          <button className="nav-btn" onClick={cycleTimeOfDay}>
+          <div 
+            className="time-display"
+          >
             {timeOfDay === 'morning' && '☀️ Morning'}
             {timeOfDay === 'afternoon' && '🌤️ Afternoon'}
             {timeOfDay === 'evening' && '🌅 Evening'}
             {timeOfDay === 'night' && '🌙 Night'}
-          </button>
+          </div>
         </div>
       </header>
 
