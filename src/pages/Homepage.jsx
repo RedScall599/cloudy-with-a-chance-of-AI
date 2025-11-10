@@ -47,12 +47,17 @@ export default function Homepage() {
         return
       }
 
-      const cityToSearch =
-        searchInput === 'auto:ip' ? searchInput : processSearchInput(searchInput)
+      let cityToSearch = searchInput
+      let searchResult = null
 
-      if (cityToSearch !== searchInput && searchInput !== 'auto:ip') {
+      if (searchInput !== 'auto:ip') {
+        searchResult = processSearchInput(searchInput)
+        cityToSearch = searchResult.city
+      }
+
+      if (searchResult && searchResult.type === 'state') {
         setStateConversionMessage(
-          `Found state "${searchInput}" - showing weather for ${cityToSearch}`
+          `Found state "${searchResult.original}" - showing weather for ${cityToSearch}`
         )
       }
 
@@ -111,12 +116,12 @@ export default function Homepage() {
       <header className="homepage-header">
         <div className="homepage-logo">⛅ Cloudy with AI</div>
         <div className="homepage-nav">
-          <button className="nav-btn" onClick={cycleTimeOfDay}>
+          <div className="nav-btn">
             {timeOfDay === 'morning' && '☀️ Morning'}
             {timeOfDay === 'afternoon' && '🌤️ Afternoon'}
             {timeOfDay === 'evening' && '🌅 Evening'}
             {timeOfDay === 'night' && '🌙 Night'}
-          </button>
+          </div>
         </div>
       </header>
 
