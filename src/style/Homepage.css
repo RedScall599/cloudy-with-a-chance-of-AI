@@ -322,6 +322,30 @@ html, body {
   border-color: var(--blue-400);
 }
 
+/* Time display - shows current time of day (clickable to refresh) */
+.time-display {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 12px;
+  color: var(--blue-600);
+  font-weight: 600;
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.time-display:hover {
+  background: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+  border-color: var(--blue-400);
+}
+
 /* Main content area - two-column layout for laptops */
 .homepage-main {
   max-width: 1400px;

@@ -9,7 +9,6 @@ import './style/Homepage.css'
 
 
 function App() {
-
   return (
      <>
     <Router>
